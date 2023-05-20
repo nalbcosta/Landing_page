@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     font-size: 100%;
     background: rgb(2,0,36);
@@ -20,6 +24,10 @@ body{
     align-items: center;
     justify-content: space-around;
     padding: 24px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.7px);
+    -webkit-backdrop-filter: blur(5.7px);
 }
 
 .cabecalho-logo{
@@ -38,6 +46,7 @@ body{
     transition: 0.4s ease-in-out;
     cursor: pointer;
     font-size: 18px;
+    text-decoration: none;
 }
 
 .cabecalho-menu-item:hover{
@@ -56,6 +65,7 @@ body{
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-around;
+    margin-bottom: 120px;
 }
 
 .conteudo-inicio-escrito{
@@ -74,7 +84,7 @@ body{
 
 .conteudo-inicio-escrito-subtitulo{
     font-family: "Montserrat", sans-serif;
-    font-weight: 300;
+    font-weight: 200;
     color: whitesmoke;
     font-size: 24px;
 }
@@ -94,29 +104,52 @@ body{
 }
 
 .conteudo-inicio-escrito-btn:hover{
-    transform: scale(1.05);
+    transform: scale(1.2);
 }
 
 .conteudo-inicio-imagem{
     margin-top: 24px;
     margin-bottom: 16px;
-    width: 400px;
-    border-radius: 50px;
+    width: 300px;
+    border-radius: 30px;
     box-shadow: 4px 5px 20px rgba(0,0,0,0.25);
+    transition: 0.4s ease-in-out;
 }
+
+.conteudo-inicio-imagem:hover{
+    transform: scale(1.08);
+}
+
 
 .conteudo-sobreMim{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    margin-top: 48px;
+    margin-top: 54px;
+    background: rgba(167, 0, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(167, 0, 255, 0.3);
+    padding-bottom: 180px;
 }
 
 .conteudo-sobreMim-titulo{
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 40px;
+    color: whitesmoke;
+    border-top: 0.2px solid whitesmoke;
+    border-radius: 4px ;
+    padding-top: 24px;
+    margin-bottom: 18px;
+}
+
+.conteudo-sobreMim-paragrafo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    font-size: 20px;
     color: whitesmoke;
 }
 
@@ -125,7 +158,73 @@ body{
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    margin-top: 48px;
+    padding-bottom: 160px;
+}
+
+.conteudo-linguagens-titulo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: whitesmoke;
+    border-top: 0.2px solid whitesmoke;
+    border-radius: 4px ;
+    padding-top: 24px;
+    margin-bottom: 18px;
+}
+
+.conteudo-linguagens-paragrafo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    font-size: 24px;
+    color: whitesmoke;
+}
+
+.java{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
+    align-items: center;
+}
+
+.java i{
+    color: yellow;
+    font-size: 64px;
+}
+
+.python{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
+    align-items: center;
+}
+
+.python i{
+    color: yellow;
+    font-size: 64px;
+}
+
+.js{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
+    align-items: center;
+}
+
+.js i{
+    color: yellow;
+    font-size: 64px;
+}
+
+.html-css{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
+    align-items: center;
+}
+
+.html-css i{
+    color: yellow;
+    font-size: 64px;
 }
 
 .conteudo-formacao{
@@ -133,7 +232,31 @@ body{
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    margin-top: 48px;
+    margin-top: 54px;
+    background: rgba(167, 0, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(167, 0, 255, 0.3);
+    padding-bottom: 200px;
+}
+
+.conteudo-formacao-titulo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: whitesmoke;
+    border-top: 0.2px solid whitesmoke;
+    border-radius: 4px ;
+    padding-top: 24px;
+    margin-bottom: 18px;
+}
+
+.conteudo-formacao-paragrafo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    font-size: 20px;
+    color: whitesmoke;
 }
 
 .conteudo-redes-sociais{
@@ -141,7 +264,16 @@ body{
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    margin-top: 48px;
+}
+
+.conteudo-redes-sociais-titulo{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: whitesmoke;
+    border-top: 0.2px solid whitesmoke;
+    border-radius: 4px ;
+    padding-top: 24px;
 }
 
 .redes-sociais-btn{
@@ -151,13 +283,11 @@ body{
     row-gap: 12px; 
 }
 
-.linkedIn, .gitHub, .instagram{
+.redes-sociais-btn button{
     cursor: pointer;
-    font-weight: 300;
     background-color: whitesmoke;
     color: black;
-    font-size: 20px;
-    font-family: "Montserrat", sans-serif;
+    font-size: 48px;
     width: 180px;
     height: 60px;
     border-radius: 20px;
@@ -166,29 +296,24 @@ body{
     margin: 24px;
 }
 
-.instagram:hover{
-    transform: scale(1.2);        
-}
-
-.gitHub:hover{
-    transform: scale(1.2);        
-}
-
-.linkedIn:hover{
-    transform: scale(1.2);        
+.redes-sociais-btn button:hover{
+    transform: scale(1.2);     
 }
 
 .rodape{
-    margin-bottom: 48px;
     border-top: 0.1px solid whitesmoke;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 24px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.7px);
+    -webkit-backdrop-filter: blur(5.7px);
 }   
 
 .rodape-imagem{
+    margin: 10px auto;
     height: 120px;
+    display: block;
+
 }
+
 
