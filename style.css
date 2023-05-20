@@ -330,8 +330,8 @@ body{
 
     .cabecalho-menu{
         flex-direction: row;
+        gap: 10px;
         text-align: center;
-        padding: 10px;
         justify-content: space-around;
     }
 
@@ -366,8 +366,7 @@ body{
     }
 
     .conteudo-sobreMim-paragrafo{
-        font-size: 100%;
-        padding: 10px;
+        font-size: 80%;
         text-align: center;
         justify-content: center;
     }
@@ -386,8 +385,7 @@ body{
     }
 
     .conteudo-linguagens-paragrafo{
-        font-size: 100%;
-        padding: 10px;
+        font-size: 80%;
         align-items: center;
         justify-content: center;
     }
@@ -402,9 +400,8 @@ body{
     }
 
     .conteudo-formacao-paragrafo{
-        font-size: 100%;
+        font-size: 80%;
         text-align: center;
-        padding: 10px;
         justify-content: center;
     }
 
