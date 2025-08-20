@@ -1,54 +1,61 @@
-# React + TypeScript + Vite
+# Meu portfólio — site pessoal construído com Next.js
+Este repositório contém meu portfólio pessoal, implementado com o novo App Router do Next.js e componentes organizados em `src/components`.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sobre
 
-Currently, two official plugins are available:
+O site apresenta uma página inicial, seção de projetos, últimas experiências e informações de contato. É uma vitrine objetiva do meu trabalho e das tecnologias que utilizo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Principais pontos:
+- Layout baseado em `app/` (App Router).
+- Componentes reutilizáveis em `src/components/`.
+- Ativos públicos em `public/` (imagens, ícones, etc.).
 
-## Expanding the ESLint configuration
+## Tecnologias
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+- PostCSS
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Rodando localmente
+
+Pré-requisitos: Node.js (versão LTS) e npm.
+
+No PowerShell, execute:
+
+```powershell
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O site ficará disponível em http://localhost:3000.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Arquivos principais para editar:
+- `app/page.tsx` — página principal
+- `app/layout.tsx` — layout global
+- `src/components/*` — componentes (Header, Footer, Hero, etc.)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Estrutura do projeto (resumo)
+
+- `app/` — entradas do App Router (`page.tsx`, `layout.tsx`, etc.)
+- `src/components/` — componentes React utilizados pelo site
+- `public/` — imagens e assets estáticos
+- `next.config.ts`, `tailwind.config.js`, `tsconfig.json` — configuração do projeto
+
+## Deploy
+
+Recomendo usar o Vercel para deploy contínuo (integração com GitHub). O site usa as otimizações nativas do Next.js e funciona sem configurações extras em Vercel.
+
+## Como contribuir / editar
+
+- Faça um fork ou branche, edite os arquivos em `app/` e `src/components/` e abra um Pull Request.
+- Para mudanças visuais, atualize os estilos em `src/components/*` ou `globals.css`.
+
+## Contato
+
+Se quiser falar sobre um projeto, oportunidade ou dar feedback, abra uma issue neste repositório ou adicione um Pull Request com suas sugestões.
+
+---
+
+README gerado para descrever este repositório como um portfólio pessoal. Arquivos-chave: `app/page.tsx`, `src/components/`.
