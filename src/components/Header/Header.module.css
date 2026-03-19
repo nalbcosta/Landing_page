@@ -1,4 +1,16 @@
 /* Brand-styled glassy navbar */
+:root{
+  --purple-900: #2B0726;
+  --purple-700: #3D0037;
+  --muted: #7A2A6B;
+  --accent: #9B5CFF;
+  --accent-2: #FF66B2;
+  --link: #E7D8FF;
+  --link-hover-bg: rgba(155,92,255,0.12);
+  --focus-shadow: rgba(155,92,255,0.18);
+  --cream: #F7EFEF;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -6,45 +18,60 @@
     right: 0;
     z-index: 60;
     backdrop-filter: blur(8px) saturate(1.08);
-    background: rgba(8, 9, 10, 0.45);
-    border-bottom: 1px solid rgba(var(--brand-muted-rgb), 0.14);
+    background: rgba(61, 0, 55, 0.45);
 }
 
 .inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px 16px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: space-between;
 }
 
 .brand {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     text-decoration: none;
+    justify-self: start;
     color: rgb(var(--brand-cream-rgb));
 }
 
+.brandText {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.brandStrong {
+    font-weight: 700;
+    color: var(--accent-2);
+}
+
+.brandLight {
+    font-weight: 200;
+    color: var(--cream); 
+    opacity: .9;
+    font-size: 0.9em;
+}
+
 .logo {
-    display: grid;
+    display: flex;
     place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, rgba(var(--brand-2-rgb), 0.22), rgba(var(--brand-1-rgb), 0.18));
-    border: 1px solid rgba(var(--brand-muted-rgb), 0.18);
-    box-shadow: 0 8px 22px -12px rgba(2, 8, 23, 0.85);
+    gap: 8px;
+    width: auto;
+    height: 48px;
 }
 
 .nav {
     display: none;
+    justify-self: center;
 }
 
 .menu {
     display: flex;
-    gap: 14px;
+    gap: 1rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -54,9 +81,10 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
+    font-weight: 200;
+    padding: 6px 10px;
     border-radius: 10px;
-    color: rgb(var(--brand-cream-rgb));
+    color: var(--link);
     text-decoration: none;
     border: 1px solid transparent;
     transition: transform .15s ease, box-shadow .15s ease, background .2s ease, border-color .2s ease;
@@ -64,21 +92,33 @@
 
 .link:hover {
     transform: translateY(-1px);
-    background: rgba(8, 9, 10, 0.55);
-    border-color: rgba(var(--brand-2-rgb), 0.35);
-    box-shadow: 0 16px 40px -16px rgba(2, 8, 23, 0.95), 0 0 0 6px rgba(var(--brand-2-rgb), 0.22);
+    background: var(--link-hover-bg);
+    border-color: rgba(155,92,255,0.22);
+    box-shadow: 0 8px 30px var(--focus-shadow);
+    font-weight: 700;
+    transition: all .2s ease;
+}
+
+
+.link:focus {
+  outline: 3px solid transparent;
+  box-shadow: 0 0 0 4px var(--focus-shadow);
 }
 
 .active {
-    background: rgba(8, 9, 10, 0.6);
-    border-color: rgba(var(--brand-2-rgb), 0.45);
-    box-shadow: 0 0 0 6px rgba(var(--brand-2-rgb), 0.18);
+    background: rgba(155,92,255,0.14);
+    border-color: rgba(155,92,255,0.28);
+    box-shadow: 0 0 0 3px rgba(155,92,255,0.12);
+    color: #ffff;
+    font-weight: 700;
+    transition: all .2s ease;
 }
 
 .burger {
     appearance: none;
     background: transparent;
     border: 0;
+    justify-self: end;
     padding: 8px;
     border-radius: 10px;
     display: inline-flex;
@@ -141,11 +181,16 @@
 
 .mobilePanel {
     position: absolute;
-    right: 10px;
-    top: 10px;
-    width: min(86vw, 320px);
-    border-radius: 14px;
-    background: rgba(8, 9, 10, 0.85);
+    right: 0;
+    left: 0;
+    top: 8px;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 0 0 14px 14px;
+    max-width: none;
+    border-color: rgba(122,42,107,0.18);
+    background: linear-gradient(180deg, rgba(61,0,55,0.9), var(--purple-900));
     backdrop-filter: blur(10px);
     border: 1px solid rgba(var(--brand-muted-rgb), 0.18);
     box-shadow: 0 24px 60px -20px rgba(2, 8, 23, 0.85);
@@ -155,7 +200,7 @@
 }
 
 .open .mobilePanel {
-    transform: translateY(0);
+    transform: translateY(60);
     opacity: 1;
 }
 
@@ -193,5 +238,32 @@
 
     .burger {
         display: none;
+    }
+}
+
+@media (max-width: 899px) {
+    .nav {
+        display: none;
+    }
+
+    .inner {
+        grid-template-columns: 1fr auto;
+    }
+
+    .brand {
+        justify-self: center;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    .brandText {
+        align-items: start;
+        text-align: start;
+    }
+
+    .burger {
+        justify-self: end;
     }
 }
