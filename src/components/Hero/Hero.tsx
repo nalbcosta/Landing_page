@@ -1,90 +1,18 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import styles from "./Hero.module.css";
-
-type Props = {
-    name?: string;
-    tags?: string[];
-};
-
-const ROLES = [
-    "Desenvolvedor Pleno Python",
-    "Full‑Stack Developer",
-    "TechLead",
-    "Frontend Developer"
-];
+import { ROLES, TECH_TAGS } from "public/constants/hero";
+import { Props } from "public/types/hero.types";
+import useTypewriter from "public/hooks/useTypewriter";
+import Hero3D from "./Hero3D";
 
 export default function Hero({ name = "Nalbert Costa", tags }: Props) {
-    const roles = useMemo(() => ROLES, []);
-    const [roleIndex, setRoleIndex] = useState(0);
-    const [cursor, setCursor] = useState(0);
-    const [deleting, setDeleting] = useState(false);
-    const [paused, setPaused] = useState(false);
+    const roles = useMemo(() => ROLES.map((r) => r.name ?? "").filter(Boolean), []);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    // Typewriter loop
-    useEffect(() => {
-        if (paused) return;
-        const current = roles[roleIndex];
-        const atWordEnd = cursor === current.length;
-        const atWordStart = cursor === 0;
-
-        const baseDelay = deleting ? 40 : 85;
-        const jitter = Math.random() * 40;
-        const delay = baseDelay + jitter;
-
-        const t = setTimeout(() => {
-            if (!deleting) {
-                if (cursor < current.length) {
-                    setCursor((c) => c + 1);
-                } else {
-                    setPaused(true);
-                    setTimeout(() => {
-                        setPaused(false);
-                        setDeleting(true);
-                    }, 1200);
-                }
-            } else {
-                if (cursor > 0) {
-                    setCursor((c) => c - 1);
-                } else {
-                    setDeleting(false);
-                    setRoleIndex((i) => (i + 1) % roles.length);
-                }
-            }
-        }, atWordEnd || atWordStart ? 140 : delay);
-
-        return () => clearTimeout(t);
-    }, [cursor, deleting, paused, roleIndex, roles]);
-
-    // Parallax glow follows cursor
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
-
-        const onMove = (e: MouseEvent) => {
-            const rect = el.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width;
-            const y = (e.clientY - rect.top) / rect.height;
-            el.style.setProperty("--mx", `${(x - 0.5) * 60}px`);
-            el.style.setProperty("--my", `${(y - 0.5) * 60}px`);
-        };
-        const onLeave = () => {
-            el.style.setProperty("--mx", `0px`);
-            el.style.setProperty("--my", `0px`);
-        };
-
-        el.addEventListener("mousemove", onMove);
-        el.addEventListener("mouseleave", onLeave);
-        return () => {
-            el.removeEventListener("mousemove", onMove);
-            el.removeEventListener("mouseleave", onLeave);
-        };
-    }, []);
-
-    const visible = roles[roleIndex].slice(0, cursor);
-    const tech = tags ?? ["Python", "Django", "TypeScript", "React", "Next.js", "Node.js"];
+    const visible = useTypewriter(roles, 85, 1200);
+    const tech = tags ?? TECH_TAGS.flatMap((t) => t.tags ?? []);
 
     return (
         <section
@@ -94,20 +22,14 @@ export default function Hero({ name = "Nalbert Costa", tags }: Props) {
             className={styles.hero}
             role="banner"
         >
+            <Hero3D />
             <div className={styles.bg} aria-hidden />
             <div className={styles.glow} aria-hidden />
-            <div className={styles.grid} aria-hidden />
             <div className={styles.content}>
-                <div className={styles.badge} style={{ display: "none" }}>
-                    <span className={styles.dot} />
-                    Available for hire
-                </div>
+                <p className={styles.eyebrow}>Portfolio • Desenvolvedor Full-Stack</p>
 
                 <h1 className={styles.title}>
-                    <span className={styles.wave} aria-hidden>
-                        👋
-                    </span>
-                    Olá, eu sou {name}
+                    {name}
                 </h1>
 
                 <h2 className={styles.subtitle}>
@@ -119,9 +41,8 @@ export default function Hero({ name = "Nalbert Costa", tags }: Props) {
                 </h2>
 
                 <p className={styles.lead}>
-                    Desenvolvo aplicações web modernas com foco em performance, usabilidade e
-                    manutenibilidade. Tenho paixão por criar experiências de usuário fluídas e
-                    soluções escaláveis.
+                    Construo produtos web rápidos, acessíveis e escaláveis.
+                    Transformo ideias em experiências claras, com foco em performance e qualidade de código.
                 </p>
 
                 <div className={styles.actions}>

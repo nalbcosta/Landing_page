@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import Header from "../components/Header/header";
+import Header from "../components/Header/Header";
 import Footer from "../components/Footer/footer";
 import BackToTop from "../components/BackToTop/BackToTop";
 import { listaDeProjetos } from "../components/Projects/ListaDeProjetos";
@@ -64,7 +64,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${montserrat.className} antialiased`}>
-        <a href="#main" className="skip-link">Skip to content</a>
         <Header />
         {children}
         <Footer />
