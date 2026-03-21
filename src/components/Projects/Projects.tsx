@@ -1,79 +1,25 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styles from "./Project.module.css";
 import { listaDeProjetos } from './ListaDeProjetos'
 import Image from "next/image";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-
-const isValidExternalUrl = (value?: string) => {
-    if (!value) return false;
-    return /^https?:\/\//i.test(value.trim());
-};
+import Projects3D from "./Projects3D";
+import { isValidExternalUrl } from "../../utils/isValidExternalUrl";
+import { useProjects } from "../../hooks/useProjects";
 
 const Projects: React.FC = () => {
-    const trackRef = useRef<HTMLDivElement | null>(null);
-    const [canPrev, setCanPrev] = useState(false);
-    const [canNext, setCanNext] = useState(true);
-    const [totalPages, setTotalPages] = useState(1);
-    const [activePage, setActivePage] = useState(0);
-
-    const updateNavState = () => {
-        const el = trackRef.current;
-        if (!el) return;
-
-        const maxScrollLeft = el.scrollWidth - el.clientWidth;
-        const step = Math.max(1, Math.round(el.clientWidth * 0.9));
-
-        setCanPrev(el.scrollLeft > 4);
-        setCanNext(el.scrollLeft < maxScrollLeft - 4);
-
-        // number of pages based on the scroll step used for navigation
-        const pages = Math.max(1, Math.ceil((el.scrollWidth - el.clientWidth) / step) + 1);
-        setTotalPages(pages);
-        setActivePage(Math.min(pages - 1, Math.round(el.scrollLeft / step)));
-    };
-
-    useEffect(() => {
-        updateNavState();
-
-        const handleResize = () => updateNavState();
-        window.addEventListener("resize", handleResize);
-
-        const el = trackRef.current;
-        el?.addEventListener("scroll", updateNavState, { passive: true });
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            el?.removeEventListener("scroll", updateNavState);
-        };
-    }, []);
-
-    const scrollByCard = (direction: "prev" | "next") => {
-        const el = trackRef.current;
-        if (!el) return;
-
-        const amount = Math.max(1, Math.round(el.clientWidth * 0.9));
-        el.scrollBy({ left: direction === "next" ? amount : -amount, behavior: "smooth" });
-    };
-
-    const scrollToPage = (page: number) => {
-        const el = trackRef.current;
-        if (!el) return;
-        const step = Math.max(1, Math.round(el.clientWidth * 0.9));
-        el.scrollTo({ left: page * step, behavior: "smooth" });
-    };
-
-    const handleTrackKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "ArrowRight") {
-            event.preventDefault();
-            scrollByCard("next");
-        }
-        if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            scrollByCard("prev");
-        }
-    };
+    const {
+        trackRef,
+        canPrev,
+        canNext,
+        totalPages,
+        activePage,
+        scrollByCard,
+        scrollToPage,
+        handleTrackKeyDown,
+    } = useProjects();
 
     return (
         <section id="projects" className={styles.wrapper}>
@@ -174,23 +120,27 @@ const Projects: React.FC = () => {
                         <BsArrowRight />
                     </button>
                 </div>
-
-                {totalPages > 1 && (
-                    <div className={styles.dots} role="tablist" aria-label="Paginação de projetos">
-                        {Array.from({ length: totalPages }).map((_, index) => (
-                            <button
-                                key={index}
-                                type="button"
-                                role="tab"
-                                aria-selected={activePage === index}
-                                aria-label={`Ir para página ${index + 1}`}
-                                className={`${styles.dot} ${activePage === index ? styles.dotActive : ""}`}
-                                onClick={() => scrollToPage(index)}
-                            />
-                        ))}
-                    </div>
-                )}
             </div>
+
+            <div className={styles.meshBand}>
+                <Projects3D />
+            </div>
+
+            {totalPages > 1 && (
+                <div className={styles.dots} role="tablist" aria-label="Paginação de projetos">
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            role="tab"
+                            aria-selected={activePage === index}
+                            aria-label={`Ir para página ${index + 1}`}
+                            className={`${styles.dot} ${activePage === index ? styles.dotActive : ""}`}
+                            onClick={() => scrollToPage(index)}
+                        />
+                    ))}
+                </div>
+            )}
         </section>
     );
 };

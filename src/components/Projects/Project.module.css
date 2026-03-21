@@ -1,8 +1,8 @@
 .wrapper {
     position: relative;
     isolation: isolate;
-    display: grid;
-    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     min-height: calc(100vh - var(--header-height, 72px));
     padding: clamp(28px, 4.5vh, 52px) 20px;
     width: 100%;
@@ -16,8 +16,9 @@
 
 .inner {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    min-height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    flex: 1 1 auto;
+    min-height: 0;
     width: 100%;
     max-width: 1380px;
     margin: 0 auto;
@@ -59,6 +60,28 @@
     display: grid;
     height: clamp(420px, 58vh, 650px);
     min-height: 0;
+}
+
+.meshBand {
+    position: relative;
+    height: clamp(160px, 20vh, 260px);
+    /* compensate wrapper's 20px horizontal padding to go full width */
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: clamp(-12px, -1.8vh, -4px);
+    margin-bottom: clamp(4px, 0.8vh, 10px);
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.meshCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.95;
+    filter: drop-shadow(0 12px 16px rgba(1, 1, 3, 0.32));
 }
 
 .navBtn {
@@ -139,6 +162,7 @@
     min-height: 0;
     border-radius: 14px;
     overflow: hidden;
+    z-index: 2;
     border: 1px solid rgba(var(--brand-muted-rgb), 0.2);
     background: rgba(10, 8, 14, 0.44);
     box-shadow: 0 20px 46px -34px rgba(0, 0, 0, 0.85);
@@ -290,10 +314,12 @@
 }
 
 .dots {
-    margin-top: 4px;
+    margin-top: 2px;
     display: flex;
     justify-content: center;
     gap: 8px;
+    position: relative;
+    z-index: 2;
 }
 
 .dot {
@@ -320,30 +346,56 @@
         display: none;
     }
 
+    /* prevent inner from expanding via flex-grow and fix grid rows to auto */
+    .inner {
+        flex: 0 0 auto;
+        grid-template-rows: auto auto;
+        min-height: 0;
+    }
+
     .carousel {
         display: block;
         height: auto;
     }
 
+    .meshBand {
+        height: clamp(120px, 16vh, 180px);
+        margin-top: -6px;
+        margin-bottom: 4px;
+    }
+
     .grid {
-        --mobile-card-w: min(86vw, 340px);
+        /* 100% here = container width (viewport - 40px padding), not vw */
+        --mobile-card-w: min(calc(100% - 16px), 340px);
         --cards-per-view: 1;
         grid-auto-columns: var(--mobile-card-w);
-        padding-inline: max(8px, calc((100% - var(--mobile-card-w)) / 2));
-        scroll-padding-inline: max(8px, calc((100% - var(--mobile-card-w)) / 2));
+        /* override row sizing: with height:auto parent, 1fr = 0, so use auto */
+        grid-auto-rows: auto;
+        height: auto;
+        align-items: start;
+        padding-inline-start: max(8px, calc((100% - var(--mobile-card-w)) / 2));
+        padding-inline-end: max(8px, calc((100% - var(--mobile-card-w)) / 2));
+        scroll-padding-inline-start: max(8px, calc((100% - var(--mobile-card-w)) / 2));
+        /* bottom padding for box-shadow visibility */
+        padding-bottom: 16px;
     }
 
     .card {
-        scroll-snap-align: center;
-        min-height: 0;
+        /* start snap has much better cross-browser support on mobile */
+        scroll-snap-align: start;
+        /* let card grow to fit all content naturally */
+        height: auto;
+        grid-template-rows: auto 1fr;
+    }
+}
+
+@media (min-width: 761px) and (max-width: 1320px) {
+    .carousel {
+        height: clamp(410px, 54vh, 590px);
     }
 }
 
 @media (max-width: 1320px) {
-    .carousel {
-        height: clamp(410px, 54vh, 590px);
-    }
-
     .grid {
         --cards-per-view: 3;
     }
@@ -394,7 +446,7 @@
     }
 
     .dots {
-        margin-top: 8px;
+        margin-top: 6px;
     }
 }
 
