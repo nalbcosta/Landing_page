@@ -25,7 +25,7 @@ const Projects: React.FC = () => {
         <section id="projects" className={styles.wrapper}>
             <div className={styles.inner}>
                 <div className={styles.sectionHeader}>
-                    <p className={styles.eyebrow} style={{display: "none"}}>Portfolio</p>
+                    <p className={styles.eyebrow}>Portfolio</p>
                     <h2 className={styles.sectionTitle}>Meus Projetos</h2>
                     <p className={styles.sectionSubtitle}>Seleção de trabalhos com foco em produto, performance e qualidade de código.</p>
                 </div>
