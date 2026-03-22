@@ -83,11 +83,12 @@ export function useProjects3d(containerRef: React.RefObject<HTMLDivElement | nul
 
         resize();
 
-        const clock = new THREE.Clock();
+        const clock = new THREE.Timer();
         const animate = () => {
             animationRef.current = window.requestAnimationFrame(animate);
 
-            const t = clock.getElapsedTime();
+            const t = clock.getElapsed();
+            clock.update();
             const frontSpeed = reduceMotion ? 0.35 : 1;
             const backSpeed = reduceMotion ? 0.25 : 0.88;
 

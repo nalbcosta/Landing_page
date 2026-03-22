@@ -1,135 +1,77 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { listaDeLinguagens} from './LanguagesList';
-import projectStyles from '../Projects/Project.module.css';
+import React from "react";
+import { listaDeLinguagens } from "./LanguagesList";
+import { useLanguages } from "../../hooks/useLanguages";
+import styles from "./Languages.module.css";
 
-export default function Languages({ className, speed = 40 }: { className?: string; speed?: number }) {
-    // Configurações do item (largura fixa para loop suave)
-    const ITEM_WIDTH = 112; // px - ícones maiores
-    const GAP = 16; // px
-    const logicalBase = listaDeLinguagens.length * (ITEM_WIDTH + GAP);
-    const trackRef = useRef<HTMLDivElement | null>(null);
-    const [distance, setDistance] = useState<number>(logicalBase);
-    const controls = useAnimation();
+const CARD_WIDTH = 110;
+const GAP = 16;
 
-    // Duração do loop = distância / velocidade
-    const duration = distance / Math.max(10, speed); // evita valores muito lentos
+export default function Languages() {
+    const { isPaused, duration, pause, resume } = useLanguages({
+        itemCount: listaDeLinguagens.length,
+        cardWidth: CARD_WIDTH,
+        gap: GAP,
+    });
 
-    // Inicia/religa a animação
-    const startLoop = async (fromCurrent = false) => {
-        if (!fromCurrent) {
-            await controls.set({ x: 0 });
-        }
-        controls.start({
-            x: -distance,
-            transition: {
-                duration,
-                ease: 'linear',
-                repeat: Infinity,
-                repeatType: 'loop',
-            },
-        });
-    };
-
-    useEffect(() => {
-        // mede o tamanho real (inclui gap e bordas) para loop perfeito
-        const recalc = () => {
-            const el = trackRef.current;
-            if (!el) return;
-            const w = el.scrollWidth;
-            if (w > 0) setDistance(w / 2);
-        };
-
-    recalc();
-    const el = trackRef.current;
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => recalc()) : null;
-    if (el && ro) ro.observe(el);
-        window.addEventListener('resize', recalc);
-
-        startLoop();
-
-        return () => {
-            window.removeEventListener('resize', recalc);
-            if (ro) ro.disconnect();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [logicalBase, duration]);
-
-    const items = [...listaDeLinguagens, ...listaDeLinguagens, ...listaDeLinguagens];
+    // Seamless infinite loop com duas cópias
+    const items = [...listaDeLinguagens, ...listaDeLinguagens, ...listaDeLinguagens, ...listaDeLinguagens];
 
     return (
-        <section
-            id="languages"
-            className={`${projectStyles.languagesViewport} ${className ?? ''}`}
-            aria-label="Carrossel de linguagens"
-            style={{ position: 'relative', padding: '12px 0', boxShadow: '20 10px 15px rgba(124, 3, 124, 0.288), 0 4px 8px -2px rgba(255, 0, 191, 0.2)' }}
-        >
-            <motion.div
-                role="list"
-                onHoverStart={() => controls.stop()}
-                onHoverEnd={() => startLoop(true)}
-                animate={controls}
-                className={projectStyles.languagesTrack}
-                style={{ gap: `${GAP}px` }}
-                ref={trackRef}
-            >
-                {items.map((lang, idx) => (
-            <motion.article
-                        role="listitem"
-                        key={`${lang.nome}-${idx}`}
-                        className={`${projectStyles.languagesSlide} ${projectStyles.languageItem} ${projectStyles.languageBox}`}
-                        style={{ width: ITEM_WIDTH, minWidth: ITEM_WIDTH, color: lang.cor }}
-                        whileHover={{ y: -8, scale: 1.05 , boxShadow: '0 16px 40px -16px rgba(2, 8, 23, 0.95), 0 0 0 6px var(--ring)' }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-                        aria-label={lang.nome}
-                        title={lang.nome}
-                    >
-                        <motion.span
-                            className={projectStyles.languageIcon}
-                            style={{ color: lang.cor, borderColor: 'rgba(0,0,0,0.06)' }}
-                            animate={{ y: [0, -2, 0] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: (idx % listaDeLinguagens.length) * 0.08 }}
-                        >
-                            {typeof lang.icone === 'function' ? (
-                                (() => {
-                                    const Icon = lang.icone as React.ElementType;
-                                    return <Icon size={lang.iconSize ?? 40} aria-hidden />;
-                                })()
-                            ) : (
-                                lang.icone
-                            )}
-                        </motion.span>
-                    </motion.article>
-                ))}
-            </motion.div>
+        <section id="languages" className={styles.section}>
+            <div className={styles.header}>
+                <p className={styles.eyebrow}>Stack de Tecnologias</p>
+                <h2 className={styles.title}>Habilidades</h2>
+                <p className={styles.subtitle}>
+                    Tecnologias que uso para construir produtos web modernos, escaláveis e performáticos.
+                </p>
+            </div>
 
-            {/* Gradientes nas bordas (fade) */}
-            <div
-                aria-hidden
-                style={{
-                    pointerEvents: 'none',
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
+            <div className={styles.marqueeWrapper}>
                 <div
+                    className={styles.track}
+                    data-paused={isPaused}
+                    onMouseEnter={pause}
+                    onMouseLeave={resume}
+                    aria-label="Carrossel de habilidades técnicas"
+                    role="list"
                     style={{
-                        width: 60,
-                        background: 'linear-gradient(to right, rgb(var(--brand-dark-rgb)), rgba(var(--brand-dark-rgb), 0))',
-                    }}
-                />
-                <div
-                    style={{
-                        width: 60,
-                        background: 'linear-gradient(to left, rgb(var(--brand-dark-rgb)), rgba(var(--brand-dark-rgb), 0))',
-                    }}
-                />
+                        "--marquee-duration": `${duration}s`,
+                        "--track-gap": `${GAP}px`,
+                        "--card-w": `${CARD_WIDTH}px`,
+                    } as React.CSSProperties}
+                >
+                    {items.map((lang, idx) => {
+                        const Icon = lang.icone as React.ElementType;
+                        const isClone = idx >= listaDeLinguagens.length;
+
+                        return (
+                            <div
+                                key={`${lang.nome}-${idx}`}
+                                className={styles.card}
+                                role="listitem"
+                                aria-label={`Habilidade: ${lang.nome}`}
+                                aria-hidden={isClone}
+                                title={lang.nome}
+                            >
+                                <span
+                                    className={styles.icon}
+                                    style={{ color: lang.cor }}
+                                    role="img"
+                                    aria-hidden="true"
+                                >
+                                    <Icon size={lang.iconSize ?? 40} />
+                                </span>
+                                <span className={styles.label}>{lang.nome}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className={styles.fadeLeft} aria-hidden="true" />
+                <div className={styles.fadeRight} aria-hidden="true" />
             </div>
         </section>
-    )
+    );
 }

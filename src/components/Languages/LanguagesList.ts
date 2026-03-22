@@ -11,65 +11,132 @@
 
 /** @type {Linguagem[]} */
 
-import { FaNodeJs, FaJsSquare, FaReact, FaPython } from "react-icons/fa";
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGo } from "react-icons/si";
+import { FaNodeJs, FaJsSquare, FaReact, FaPython, FaDocker } from "react-icons/fa";
+import { 
+    SiTypescript, 
+    SiNextdotjs, 
+    SiTailwindcss, 
+    SiLaravel,
+    SiFastapi,
+    SiDjango,
+    SiMongodb,
+    SiMysql,
+    SiPostgresql,
+    SiGithubactions,
+} from "react-icons/si";
 
 export const listaDeLinguagens = [
+    // ── Frontend ────────────────────────
     {
         nome: 'JavaScript',
         icone: FaJsSquare,
         iconSize: 44,
         bg: '#FFF7CC',
-        cor: '#E980FC',
+        cor: '#F7DF1E',
     },
     {
         nome: 'TypeScript',
         icone: SiTypescript,
         iconSize: 44,
         bg: '#D6E7FF',
-        cor: '#0A2EDE',
+        cor: '#3178C6',
     },
     {
         nome: 'React',
         icone: FaReact,
         iconSize: 44,
-        bg: '#D3FBFF',
-        cor: '#0B8AA8',
+        bg: '#E0F7FA',
+        cor: '#61DAFB',
     },
     {
         nome: 'Next.js',
         icone: SiNextdotjs,
         iconSize: 44,
-        bg: '#EDEDED',
-        cor: '#8F3985',
-    },
-    {
-        nome: 'Node.js',
-        icone: FaNodeJs,
-        iconSize: 44,
-        bg: '#E6F6E6',
-        cor: '#116149',
+        bg: '#F0F0F0',
+        cor: '#FFFFFF',
     },
     {
         nome: 'Tailwind',
         icone: SiTailwindcss,
         iconSize: 44,
-        bg: '#E5FBFF',
-        cor: '#38BDF8',
+        bg: '#E0F2FE',
+        cor: '#06B6D4',
+    },
+
+    // ── Backend ────────────────────────
+    {
+        nome: 'Node.js',
+        icone: FaNodeJs,
+        iconSize: 44,
+        bg: '#E8F5E9',
+        cor: '#68A063',
     },
     {
         nome: 'Python',
         icone: FaPython,
         iconSize: 44,
-        bg: '#FFF3D9',
+        bg: '#F3E5F5',
         cor: '#3776AB',
     },
     {
-        nome: 'Go',
-        icone: SiGo,
+        nome: 'FastAPI',
+        icone: SiFastapi,
         iconSize: 44,
-        bg: '#D9F7FF',
-        cor: '#00ADD8',
+        bg: '#E8F5E9',
+        cor: '#109989',
+    },
+    {
+        nome: 'Django',
+        icone: SiDjango,
+        iconSize: 44,
+        bg: '#FCE4EC',
+        cor: '#092E20',
+    },
+    {
+        nome: 'Laravel',
+        icone: SiLaravel,
+        iconSize: 44,
+        bg: '#F3E5F5',
+        cor: '#FF2D20',
+    },
+
+    // ── Database ────────────────────────
+    {
+        nome: 'MongoDB',
+        icone: SiMongodb,
+        iconSize: 44,
+        bg: '#E8F5E9',
+        cor: '#13AA52',
+    },
+    {
+        nome: 'MySQL',
+        icone: SiMysql,
+        iconSize: 44,
+        bg: '#E3F2FD',
+        cor: '#00758F',
+    },
+    {
+        nome: 'PostgreSQL',
+        icone: SiPostgresql,
+        iconSize: 44,
+        bg: '#F3E5F5',
+        cor: '#336791',
+    },
+
+    // ── DevOps & Tools ────────────────────────
+    {
+        nome: 'Docker',
+        icone: FaDocker,
+        iconSize: 44,
+        bg: '#E3F2FD',
+        cor: '#2496ED',
+    },
+    {
+        nome: 'CI/CD',
+        icone: SiGithubactions,
+        iconSize: 44,
+        bg: '#F3E5F5',
+        cor: '#2088FF',
     },
 ];
 

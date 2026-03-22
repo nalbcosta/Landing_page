@@ -1,11 +1,15 @@
 "use client";
 
-import React from "react";
 import styles from "./Footer.module.css";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function Footer() {
-	const year = new Date().getFullYear();
+	const [year, setYear] = useState<number | null>(null);
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
 	return (
 		<footer className={styles.footer} id="footer">
 			<div className={styles.inner}>
