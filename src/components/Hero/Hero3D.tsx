@@ -3,9 +3,11 @@
 import { useRef } from "react";
 import { useThree3d } from "../../hooks/useThree3d";
 
-export default function Hero3D() {
+type Props = { flip?: boolean };
+
+export default function Hero3D({ flip = false }: Props) {
     const containerRef = useRef<HTMLDivElement>(null);
-    useThree3d(containerRef);
+    useThree3d(containerRef, flip);
 
     return (
         <div

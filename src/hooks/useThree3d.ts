@@ -25,7 +25,7 @@ function createShellGradientTexture() {
     return texture;
 }
 
-export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>) {
+export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>, flip = false) {
     const sceneRef = useRef<THREE.Scene | null>(null);
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
     const orbGroupRef = useRef<THREE.Group | null>(null);
@@ -39,6 +39,8 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
 
     useEffect(() => {
         if (!containerRef.current) return;
+
+        const dir = flip ? -1 : 1;
 
         // Scene Setup
         const scene = new THREE.Scene();
@@ -92,7 +94,7 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
         });
 
         const orbGroup = new THREE.Group();
-        orbGroup.position.set(4.25, -1.35, -1.15);
+        orbGroup.position.set(4.25 * dir, -1.35, -1.15);
 
         const shellFill = new THREE.Mesh(shellGeometry, shellFillMaterial);
         const shellWire = new THREE.Mesh(shellGeometry, shellWireMaterial);
@@ -100,7 +102,7 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
         shellWire.scale.setScalar(1.075);
 
         const accentShape = new THREE.Mesh(accentGeometry, accentMaterial);
-        accentShape.position.set(-2.45, 1.52, -1.05);
+        accentShape.position.set(-2.45 * dir, 1.52, -1.05);
         accentShape.rotation.set(0.3, 0.15, 0.45);
 
         orbGroup.add(shellFill);
@@ -114,15 +116,15 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
 
         // Key + fill + rim lights to reveal volume
         const keyLight = new THREE.DirectionalLight(0xffc9ff, 1.85);
-        keyLight.position.set(8.5, 4.2, 7.5);
+        keyLight.position.set(8.5 * dir, 4.2, 7.5);
         scene.add(keyLight);
 
         const fillLight = new THREE.PointLight(0x8f3985, 0.92, 20);
-        fillLight.position.set(-3.4, -0.8, 2.8);
+        fillLight.position.set(-3.4 * dir, -0.8, 2.8);
         scene.add(fillLight);
 
         const rimLight = new THREE.PointLight(0xf6beff, 2.35, 22);
-        rimLight.position.set(3.5, 2.4, -2.1);
+        rimLight.position.set(3.5 * dir, 2.4, -2.1);
         scene.add(rimLight);
 
         const ambientLight = new THREE.AmbientLight(0x2b1733, 0.38);
@@ -149,7 +151,7 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
 
             if (orbGroupRef.current) {
                 orbGroupRef.current.position.set(
-                    isMobile ? 0.85 : sideOffset + 0.1,
+                    (isMobile ? 0.85 : sideOffset + 0.1) * dir,
                     isMobile ? -0.38 : -1.35,
                     isMobile ? -0.38 : -1.15
                 );
@@ -160,13 +162,13 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
             shellWireMaterial.opacity = isMobile ? 0.06 : 0.09;
             accentShape.visible = !isMobile;
             if (!isMobile) {
-                accentBaseXRef.current = -sideOffset * 0.80;
+                accentBaseXRef.current = -sideOffset * 0.80 * dir;
                 accentBaseYRef.current = 0.90;
                 accentBaseZRef.current = -1.05;
                 accentShape.position.set(accentBaseXRef.current, accentBaseYRef.current, accentBaseZRef.current);
                 accentShape.scale.setScalar(0.64);
             } else {
-                accentBaseXRef.current = -1.2;
+                accentBaseXRef.current = -1.2 * dir;
                 accentBaseYRef.current = 0.55;
                 accentBaseZRef.current = -0.75;
                 accentShape.position.set(accentBaseXRef.current, accentBaseYRef.current, accentBaseZRef.current);
@@ -211,8 +213,8 @@ export function useThree3d(containerRef: React.RefObject<HTMLDivElement | null>)
                 accentShapeRef.current.position.y = accentBaseYRef.current + Math.sin(t * 0.32) * 0.02;
             }
 
-            const rimBaseX = isMobileRef.current ? 2.1 : 3.5;
-            rimLight.position.x = rimBaseX + Math.sin(t * 0.16) * 0.45;
+            const rimBaseX = (isMobileRef.current ? 2.1 : 3.5) * dir;
+            rimLight.position.x = rimBaseX + Math.sin(t * 0.16) * 0.45 * dir;
             rimLight.position.z = -2.1 + Math.cos(t * 0.14) * 0.18;
 
             renderer.render(scene, camera);

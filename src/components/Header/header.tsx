@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Header.module.css";
@@ -10,11 +10,25 @@ import useScrollLock from "../../hooks/useScrollLock";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);
+	const [pastHero, setPastHero] = useState(false);
 	const sections = useMemo(() => ["#hero", "#projects", "#last-jobs", "#qualifications", "#contact"], []);
 	const headerRef = useRef<HTMLElement | null>(null);
 
 	useScrollLock(open);
 	const activeSection = useActiveSection(sections, headerRef);
+
+	useEffect(() => {
+		const onScroll = () => {
+			const hero = document.querySelector("#hero");
+			if (hero) {
+				setPastHero(hero.getBoundingClientRect().bottom < 80);
+			} else {
+				setPastHero(window.scrollY > window.innerHeight * 0.8);
+			}
+		};
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
 
 	return (
 		<header ref={headerRef} className={styles.header} role="navigation" aria-label="Primary">
@@ -30,7 +44,7 @@ export default function Header() {
 				</Link>
 
 				<nav className={styles.nav} aria-label="Main menu">
-					<ul className={styles.menu}>
+					<ul className={`${styles.menu} ${pastHero ? styles.menuGlass : ""}`}>
 						{NAV.map((item) => (
 							<li key={item.href}>
 								<a

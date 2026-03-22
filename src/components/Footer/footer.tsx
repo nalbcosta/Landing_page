@@ -7,41 +7,86 @@ import { useState, useEffect } from "react";
 export default function Footer() {
 	const [year, setYear] = useState<number | null>(null);
 
-    useEffect(() => {
-        setYear(new Date().getFullYear());
-    }, []);
+	useEffect(() => {
+		setYear(new Date().getFullYear());
+	}, []);
+
 	return (
 		<footer className={styles.footer} id="footer">
 			<div className={styles.inner}>
-				<div className={styles.top}>
-					<a href="#hero" className={styles.brand} aria-label="Back to top">
-						<span className={styles.logo} aria-hidden>
-							<Image src="/logo.png" alt="" width={28} height={28} />
-						</span>
-						<span className={styles.tagline}>Let’s build something great together.</span>
-					</a>
+				<div className={styles.main}>
+					{/* ── Brand + social ── */}
+					<div className={styles.brand}>
+						<a href="#hero" className={styles.brandLink} aria-label="Voltar ao topo">
+							<span className={styles.logo} aria-hidden>
+								<Image src="/logo.png" alt="" width={22} height={22} />
+							</span>
+							<span className={styles.brandName}>Nalbert Costa</span>
+						</a>
+
+						<p className={styles.tagline}>
+							Desenvolvedor Full-Stack focado em soluções modernas e escaláveis.
+						</p>
+
+						<div className={styles.social}>
+							<a
+								className={styles.socialBtn}
+								href="https://github.com/"
+								target="_blank"
+								rel="noreferrer"
+								aria-label="GitHub"
+							>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+									<path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
+								</svg>
+							</a>
+
+							<a
+								className={styles.socialBtn}
+								href="https://www.linkedin.com/"
+								target="_blank"
+								rel="noreferrer"
+								aria-label="LinkedIn"
+							>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					{/* ── Nav links ── */}
+					<nav className={styles.nav} aria-label="Links do rodapé">
+						<div className={styles.navGroup}>
+							<p className={styles.navLabel}>Navegação</p>
+							<ul className={styles.navLinks}>
+								<li><a href="#hero">Início</a></li>
+								<li><a href="#last-jobs">Experiência</a></li>
+								<li><a href="#qualifications">Formação</a></li>
+							</ul>
+						</div>
+
+						<div className={styles.navGroup}>
+							<p className={styles.navLabel}>Portfólio</p>
+							<ul className={styles.navLinks}>
+								<li><a href="#projects">Projetos</a></li>
+								<li><a href="#languages">Tecnologias</a></li>
+								<li><a href="#contact">Contato</a></li>
+							</ul>
+						</div>
+					</nav>
 				</div>
 
+				{/* ── Bottom bar ── */}
 				<div className={styles.bottom}>
-					<div className={styles.meta}>
-						<span>© {year} Nalbert Costa</span>
-						<span>Made with Next.js</span>
-					</div>
-					<div className={styles.social}>
-						<a className={styles.socialBtn} href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub">
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-								<path d="M12 .5C5.73.5.98 5.25.98 11.52c0 4.86 3.15 8.98 7.52 10.43.55.1.75-.24.75-.53 0-.26-.01-1.12-.02-2.04-3.06.66-3.71-1.3-3.71-1.3-.5-1.26-1.22-1.6-1.22-1.6-.99-.68.07-.66.07-.66 1.1.08 1.67 1.13 1.67 1.13.98 1.66 2.57 1.18 3.2.9.1-.71.38-1.18.69-1.45-2.44-.28-5-1.22-5-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13.88-.24 1.83-.36 2.77-.36.94 0 1.9.12 2.78.36 2.1-1.43 3.02-1.13 3.02-1.13.6 1.52.22 2.64.11 2.92.7.77 1.13 1.75 1.13 2.95 0 4.22-2.56 5.15-5 5.43.39.34.73 1.01.73 2.05 0 1.48-.01 2.67-.01 3.04 0 .29.2.64.76.53 4.36-1.46 7.51-5.58 7.51-10.43C23.02 5.25 18.27.5 12 .5z"/>
-							</svg>
-						</a>
-						<a className={styles.socialBtn} href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-								<path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4zM8.5 8.5h3.8v2.1h.05c.53-1 1.82-2.1 3.75-2.1 4.01 0 4.75 2.64 4.75 6.08V24h-4v-6.6c0-1.57-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.5V24h-4z"/>
-							</svg>
-						</a>
-					</div>
+					<span className={styles.copyright}>
+						© {year} Nalbert Costa. Todos os direitos reservados.
+					</span>
+					<span className={styles.made}>
+						Feito com <a href="https://nextjs.org" target="_blank" rel="noreferrer">Next.js</a> & Three.js
+					</span>
 				</div>
 			</div>
 		</footer>
 	);
 }
-

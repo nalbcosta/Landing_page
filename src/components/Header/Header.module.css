@@ -79,17 +79,63 @@
     display: flex;
     gap: 1rem;
     list-style: none;
+    padding: 6px 8px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: transparent;
+    position: relative;
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.menuGlass {
+    background: rgba(18, 4, 32, 0.42);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-color: transparent;
+    box-shadow:
+        -2px 0 14px rgba(255, 80, 160, 0.15),
+        2px 0 14px rgba(90, 130, 255, 0.15),
+        0 6px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+/* Gradient border with chromatic aberration */
+.menuGlass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+        110deg,
+        rgba(255, 80, 160, 0.35) 0%,
+        rgba(155, 92, 255, 0.15) 50%,
+        rgba(70, 140, 255, 0.35) 100%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
 .link {
     display: inline-flex;
     align-items: center;
-    font-weight: 200;
+    font-weight: 300;
     padding: 6px 10px;
     border-radius: 10px;
     color: var(--link);
     text-decoration: none;
     border: 1px solid transparent;
+    text-shadow: 0 1px 10px rgba(155, 92, 255, 0.25);
     transition: transform .15s ease, box-shadow .15s ease, background .2s ease, border-color .2s ease;
 }
 
