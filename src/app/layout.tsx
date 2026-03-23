@@ -5,6 +5,7 @@ import Header from "../components/Header/header";
 import Footer from "../components/Footer/footer";
 import BackToTop from "../components/BackToTop/BackToTop";
 import { listaDeProjetos } from "../components/Projects/ListaDeProjetos";
+import { Analytics } from "@vercel/analytics/next"
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -87,6 +88,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <BackToTop />
+        <Analytics />
         {/* JSON-LD: Person */}
         <script
           type="application/ld+json"
