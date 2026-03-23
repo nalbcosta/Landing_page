@@ -1,0 +1,58 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+:root {
+  --brand-1: #8F3985;
+  --brand-2: #E980FC;
+  --brand-dark: #1C1018;
+  --brand-muted: #A2A79E;
+  --brand-cream: #F2EFE9;
+
+  /* Numeric RGB variants for use with rgb()/rgba(var(--name-rgb), a) */
+  --brand-1-rgb: 143, 57, 133;
+  /* #8F3985 */
+  --brand-2-rgb: 233, 128, 252;
+  /* #E980FC */
+  --brand-dark-rgb: 28, 16, 24;
+  /* #1C1018 */
+  --brand-muted-rgb: 162, 167, 158;
+  /* #A2A79E */
+  --brand-cream-rgb: 242, 239, 233;
+  /* #F2EFE9 */
+
+  --header-height: 0.1vh;
+}
+
+/* Smooth scrolling with accessibility fallback */
+html {
+  color-scheme: light dark;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Anchor offset for sticky header */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+
+html,
+body,
+#__next {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(180deg, #17131a 0%, #1a1620 40%, rgba(143, 57, 133, 0.05) 100%);
+  color: rgb(var(--brand-cream-rgb));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

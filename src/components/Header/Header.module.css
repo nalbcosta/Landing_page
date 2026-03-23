@@ -1,0 +1,329 @@
+/* Brand-styled glassy navbar */
+:root{
+  --purple-900: #2B0726;
+  --purple-700: #3D0037;
+  --muted: #7A2A6B;
+  --accent: #9B5CFF;
+  --accent-2: #FF66B2;
+  --link: #E7D8FF;
+  --link-hover-bg: rgba(155,92,255,0.12);
+  --focus-shadow: rgba(155,92,255,0.18);
+  --cream: #F7EFEF;
+}
+
+.header {
+    position: fixed;
+    top: 1.5rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    z-index: 50;
+    align-items: center;
+    /* backdrop-filter: blur(8px) saturate(1.08);
+    background: rgba(61, 0, 55, 0.45); */
+}
+
+.inner {
+    margin: 0 auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.brand {
+    position: absolute;
+    left: 2rem;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(var(--brand-cream-rgb));
+}
+
+.brandText {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.brandStrong {
+    font-weight: 700;
+    color: var(--accent-2);
+}
+
+.brandLight {
+    font-weight: 200;
+    color: var(--cream); 
+    opacity: .9;
+    font-size: 0.9em;
+}
+
+.logo {
+    display: flex;
+    place-items: center;
+    gap: 8px;
+    width: auto;
+    height: 48px;
+}
+
+.nav {
+    display: none;
+    justify-self: center;
+    margin: 0 auto;
+}
+
+.menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 6px 8px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: transparent;
+    position: relative;
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.menuGlass {
+    background: rgba(18, 4, 32, 0.42);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border-color: transparent;
+    box-shadow:
+        -2px 0 14px rgba(255, 80, 160, 0.15),
+        2px 0 14px rgba(90, 130, 255, 0.15),
+        0 6px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+/* Gradient border with chromatic aberration */
+.menuGlass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+        110deg,
+        rgba(255, 80, 160, 0.35) 0%,
+        rgba(155, 92, 255, 0.15) 50%,
+        rgba(70, 140, 255, 0.35) 100%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 300;
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: var(--link);
+    text-decoration: none;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 10px rgba(155, 92, 255, 0.25);
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease, border-color .2s ease;
+}
+
+.link:hover {
+    transform: translateY(-1px);
+    background: var(--link-hover-bg);
+    border-color: rgba(155,92,255,0.22);
+    box-shadow: 0 8px 30px var(--focus-shadow);
+    font-weight: 700;
+    transition: all .2s ease;
+}
+
+
+.link:focus {
+  outline: 3px solid transparent;
+  box-shadow: 0 0 0 4px var(--focus-shadow);
+}
+
+.active {
+    background: rgba(155,92,255,0.14);
+    border-color: rgba(155,92,255,0.28);
+    box-shadow: 0 0 0 3px rgba(155,92,255,0.12);
+    color: #ffff;
+    font-weight: 700;
+    transition: all .2s ease;
+}
+
+.burger {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    justify-self: end;
+    padding: 8px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--brand-cream-rgb));
+}
+
+.burger:hover {
+    background: rgba(8, 9, 10, 0.55);
+}
+
+.burgerBox {
+    width: 24px;
+    height: 18px;
+    position: relative;
+}
+
+.burgerInner,
+.burgerInner::before,
+.burgerInner::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgb(var(--brand-cream-rgb));
+    border-radius: 2px;
+    content: "";
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.burgerInner {
+    top: 8px;
+}
+
+.burgerInner::before {
+    top: -8px;
+}
+
+.burgerInner::after {
+    top: 8px;
+}
+
+.mobile {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.open {
+    pointer-events: auto;
+}
+
+.scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    border: 0;
+    z-index: 40;
+    opacity: 0;                   
+    visibility: hidden;          
+    transition: opacity .2s ease; 
+}
+
+.open .scrim {
+    opacity: 1;                    
+    visibility: visible;          
+}
+
+.mobilePanel {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 1rem;
+    width: 100%;
+    z-index: 45;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 0 0 14px 14px;
+    max-width: none;
+    border-color: rgba(122,42,107,0.18);
+    background: linear-gradient(180deg, rgba(61,0,55,0.9), var(--purple-900));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--brand-muted-rgb), 0.18);
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform .18s ease, opacity .18s ease;
+}
+
+.open .mobilePanel {
+    transform: translateY(60);
+    opacity: 1;
+}
+
+.mobileMenu {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    display: grid;
+    gap: 6px;
+}
+
+.mobileLink {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: rgb(var(--brand-cream-rgb));
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.mobileLink:hover {
+    background: rgba(8, 9, 10, 0.6);
+    border-color: rgba(var(--brand-2-rgb), 0.35);
+}
+
+.mobileActive {
+    background: rgba(8, 9, 10, 0.6);
+    border-color: rgba(var(--brand-2-rgb), 0.45);
+}
+
+@media (min-width: 900px) {
+    .nav {
+        display: block;
+    }
+
+    .burger {
+        display: none;
+    }
+}
+
+@media (max-width: 899px) {
+    .nav {
+        display: none;
+    }
+
+    .inner {
+        padding-left: 2.5rem;  
+        padding-right: 1rem;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    .brand {
+        position: relative;
+        left: auto;
+        transform: none;
+        width: 100%;          
+        display: flex;
+        justify-content: center;
+        margin: 0; 
+    }
+
+    .brandText {
+        display: none;
+    }
+}
