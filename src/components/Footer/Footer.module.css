@@ -56,13 +56,6 @@
     place-items: center;
     width: 36px;
     height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(
-        135deg,
-        rgba(var(--brand-2-rgb), 0.18),
-        rgba(var(--brand-1-rgb), 0.16)
-    );
-    border: 1px solid rgba(var(--brand-muted-rgb), 0.15);
     box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.8);
     flex-shrink: 0;
 }
@@ -72,6 +65,18 @@
     font-weight: 700;
     letter-spacing: -0.01em;
     color: rgb(var(--brand-cream-rgb));
+}
+
+.brandStrong {
+    font-weight: 700;
+    color: var(--accent-2);
+}
+
+.brandLight {
+    font-weight: 200;
+    color: var(--cream); 
+    opacity: .9;
+    font-size: 0.9em;
 }
 
 .tagline {

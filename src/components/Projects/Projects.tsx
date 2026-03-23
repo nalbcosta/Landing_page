@@ -1,15 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Project.module.css";
-import { listaDeProjetos } from './ListaDeProjetos'
-import Image from "next/image";
+import { listaDeProjetos, type Projeto } from './ListaDeProjetos'
+import { S3Image } from "../S3Image";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Projects3D from "./Projects3D";
 import { isValidExternalUrl } from "../../utils/isValidExternalUrl";
 import { useProjects } from "../../hooks/useProjects";
+import ProjectModal from "./ProjectModal";
 
 const Projects: React.FC = () => {
+    const [selectedProject, setSelectedProject] = useState<Projeto | null>(null);
+
     const {
         trackRef,
         canPrev,
@@ -30,7 +33,7 @@ const Projects: React.FC = () => {
                     <p className={styles.sectionSubtitle}>Seleção de trabalhos com foco em produto, performance e qualidade de código.</p>
                 </div>
 
-                <div className={styles.carousel}>
+                <div className={styles.carousel} suppressHydrationWarning>
                     <button
                         type="button"
                         className={styles.navBtn}
@@ -48,20 +51,26 @@ const Projects: React.FC = () => {
                         tabIndex={0}
                         onKeyDown={handleTrackKeyDown}
                     >
-                    {listaDeProjetos.map((projeto, idx) => {
+                    {listaDeProjetos.map((projeto: Projeto, idx: number) => {
                         const hasSite = isValidExternalUrl(projeto.site);
                         const hasRepo = isValidExternalUrl(projeto.repo);
 
                         return (
-                        <article key={projeto.id} className={styles.card}>
+                        <article
+                            key={projeto.id}
+                            className={styles.card}
+                            onClick={() => setSelectedProject(projeto)}
+                            style={{ cursor: "pointer" }}
+                            aria-label={`Abrir detalhes de ${projeto.titulo}`}
+                        >
                             <div className={styles.cover}>
-                                <Image
+                                <S3Image
                                     src={projeto.imagem}
                                     alt={projeto.titulo}
                                     className={styles.coverImg}
                                     fill
                                     sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    priority={idx === 0}
+                                    priority={idx === 0} width={0} height={0}
                                 />
                                 <p className={styles.badge}>{projeto.status}</p>
                             </div>
@@ -77,7 +86,7 @@ const Projects: React.FC = () => {
                                 </div>
 
                                 <div className={styles.tags}>
-                                    {projeto.tags.map((tag) => (
+                                    {projeto.tags.map((tag: string) => (
                                         <span key={tag} className={styles.tag}>
                                             {tag}
                                         </span>
@@ -86,7 +95,13 @@ const Projects: React.FC = () => {
 
                                 <div className={styles.actions}>
                                     {hasSite ? (
-                                        <a href={projeto.site} className={styles.cta} target="_blank" rel="noopener noreferrer">
+                                        <a
+                                            href={projeto.site}
+                                            className={styles.cta}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
                                             Ver projeto
                                         </a>
                                     ) : (
@@ -96,7 +111,13 @@ const Projects: React.FC = () => {
                                     )}
 
                                     {hasRepo ? (
-                                        <a href={projeto.repo} className={styles.link} target="_blank" rel="noopener noreferrer">
+                                        <a
+                                            href={projeto.repo}
+                                            className={styles.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
                                             Código
                                         </a>
                                     ) : (
@@ -127,7 +148,7 @@ const Projects: React.FC = () => {
             </div>
 
             {totalPages > 1 && (
-                <div className={styles.dots} role="tablist" aria-label="Paginação de projetos">
+                <div className={styles.dots} role="tablist" aria-label="Paginação de projetos" suppressHydrationWarning>
                     {Array.from({ length: totalPages }).map((_, index) => (
                         <button
                             key={index}
@@ -140,6 +161,13 @@ const Projects: React.FC = () => {
                         />
                     ))}
                 </div>
+            )}
+
+            {selectedProject && (
+                <ProjectModal
+                    projeto={selectedProject}
+                    onClose={() => setSelectedProject(null)}
+                />
             )}
         </section>
     );

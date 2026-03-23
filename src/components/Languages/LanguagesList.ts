@@ -11,7 +11,7 @@
 
 /** @type {Linguagem[]} */
 
-import { FaNodeJs, FaJsSquare, FaReact, FaPython, FaDocker } from "react-icons/fa";
+import { FaNodeJs, FaJsSquare, FaReact, FaPython, FaDocker, FaAws } from "react-icons/fa";
 import { 
     SiTypescript, 
     SiNextdotjs, 
@@ -23,6 +23,9 @@ import {
     SiMysql,
     SiPostgresql,
     SiGithubactions,
+    SiVuedotjs,
+    SiDigitalocean,
+    SiLinux,
 } from "react-icons/si";
 
 export const listaDeLinguagens = [
@@ -54,6 +57,13 @@ export const listaDeLinguagens = [
         iconSize: 44,
         bg: '#F0F0F0',
         cor: '#FFFFFF',
+    },
+    {
+        nome: 'Vue.js',
+        icone: SiVuedotjs,
+        iconSize: 44,
+        bg: '#E8F5E9',
+        cor: '#4FC08D',
     },
     {
         nome: 'Tailwind',
@@ -137,6 +147,27 @@ export const listaDeLinguagens = [
         iconSize: 44,
         bg: '#F3E5F5',
         cor: '#2088FF',
+    },
+    {
+        nome: 'DigitalOcean',
+        icone: SiDigitalocean,
+        iconSize: 44,
+        bg: '#F3E5F5',
+        cor: '#0069D6',
+    },
+    {
+        nome: 'AWS',
+        icone: FaAws,
+        iconSize: 44,
+        bg: '#FFF3E0',
+        cor: '#FF9900',
+    },
+    {
+        nome: 'Linux',
+        icone: SiLinux,
+        iconSize: 44,
+        bg: '#FFF000',
+        cor: '#000000',
     },
 ];
 

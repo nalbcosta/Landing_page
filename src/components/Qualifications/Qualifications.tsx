@@ -2,9 +2,11 @@
 
 import styles from "./Qualifications.module.css";
 import QUALIFICATIONS from "./QualificationsList";
-import Image from "next/image";
+import { S3Image } from "../S3Image";
 import { motion } from "framer-motion";
 import Hero3D from "../Hero/Hero3D";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { useQualifications } from "../../hooks/useQualifications";
 
 export type Qualification = {
 	id: string;
@@ -49,6 +51,17 @@ export default function Qualifications({
 	subtitle = "Educação e certificações relevantes",
 	id = "qualifications",
 }: Props) {
+	const {
+		trackRef,
+		canPrev,
+		canNext,
+		totalPages,
+		activePage,
+		scrollByPage,
+		scrollToPage,
+		handleTrackKeyDown,
+	} = useQualifications();
+
 	return (
 		<section id={id} className={styles.wrapper} aria-labelledby="qualifications-title">
 			<Hero3D flip/>
@@ -59,20 +72,35 @@ export default function Qualifications({
 					<p className={styles.subtitle}>{subtitle}</p>
 				</header>
 
-				<motion.ol
-					className={styles.list}
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="show"
-					viewport={{ once: true, amount: 0.1 }}
-				>
-					{items.map((q) => (
-						<motion.li key={q.id} className={styles.item} variants={itemVariants}>
+				<div className={styles.carousel} suppressHydrationWarning>
+					<button
+						type="button"
+						className={styles.navBtn}
+						onClick={() => scrollByPage("prev")}
+						disabled={!canPrev}
+						aria-label="Ver formações anteriores"
+					>
+						<BsArrowLeft />
+					</button>
+
+					<motion.ol
+						ref={trackRef}
+						className={styles.list}
+						variants={containerVariants}
+						initial="hidden"
+						whileInView="show"
+						viewport={{ once: true, amount: 0.1 }}
+						aria-label="Lista de formações"
+						tabIndex={0}
+						onKeyDown={handleTrackKeyDown}
+					>
+						{items.map((q) => (
+							<motion.li key={q.id} className={styles.item} variants={itemVariants}>
 							<div className={styles.cardTop}>
 								<div className={styles.identity}>
 									{q.logo && (
 										<div className={styles.logoWrap} aria-hidden>
-											<Image
+											<S3Image
 												src={q.logo}
 												alt=""
 												width={36}
@@ -120,9 +148,36 @@ export default function Qualifications({
 									))}
 								</ul>
 							)}
-						</motion.li>
-					))}
-				</motion.ol>
+							</motion.li>
+						))}
+					</motion.ol>
+
+					<button
+						type="button"
+						className={styles.navBtn}
+						onClick={() => scrollByPage("next")}
+						disabled={!canNext}
+						aria-label="Ver próximas formações"
+					>
+						<BsArrowRight />
+					</button>
+				</div>
+
+				{totalPages > 1 && (
+					<div className={styles.dots} role="tablist" aria-label="Paginação de formações" suppressHydrationWarning>
+						{Array.from({ length: totalPages }).map((_, index) => (
+							<button
+								key={index}
+								type="button"
+								role="tab"
+								aria-selected={activePage === index}
+								aria-label={`Ir para página ${index + 1}`}
+								className={`${styles.dot} ${activePage === index ? styles.dotActive : ""}`}
+								onClick={() => scrollToPage(index)}
+							/>
+						))}
+					</div>
+				)}
 			</div>
 		</section>
 	);

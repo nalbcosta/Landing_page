@@ -6,6 +6,7 @@ export function useProjects() {
     const [canNext, setCanNext] = useState(true);
     const [totalPages, setTotalPages] = useState(1);
     const [activePage, setActivePage] = useState(0);
+    const [isMounted, setIsMounted] = useState(false);
 
     const updateNavState = () => {
         const el = trackRef.current;
@@ -26,6 +27,7 @@ export function useProjects() {
     };
 
     useEffect(() => {
+        setIsMounted(true);
         updateNavState();
 
         const handleResize = () => updateNavState();

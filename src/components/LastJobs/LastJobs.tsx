@@ -3,7 +3,7 @@
 import styles from "./LastJobs.module.css";
 import JOBS from "./JobsList";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { S3Image } from "../S3Image";
 import { useRef } from "react";
 import { useLastJobsParticles } from "../../hooks/useLastJobsParticles";
 
@@ -83,7 +83,7 @@ export default function LastJobs({
 										<div className={styles.identity}>
 											{job.logo && (
 												<div className={styles.logoWrap} aria-hidden>
-													<Image
+													<S3Image
 														src={job.logo}
 														alt=""
 														width={40}

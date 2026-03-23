@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { S3Image } from "../S3Image";
 import Link from "next/link";
 import styles from "./Header.module.css";
 import { NAV } from "public/constants/nav";
@@ -35,7 +35,7 @@ export default function Header() {
 			<div className={styles.inner}>
 				<Link href="#hero" className={styles.brand} aria-label="Go to top" onClick={() => setOpen(false)}>
 					<span className={styles.logo} aria-hidden>
-						<Image src="/logo.png" alt="" width={48} height={48} priority />
+						<S3Image src="/logo.png" alt="" width={48} height={48} priority />
 						<span className={styles.brandText}>
 							<span className={styles.brandStrong}>Nalbert</span>
 							<span className={styles.brandLight}> Costa.</span>

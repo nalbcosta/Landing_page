@@ -1,28 +1,39 @@
 "use client";
 import Link from "next/link";
+import styles from "./not-found.module.css";
 
 export default function NotFound() {
   return (
-    <main id="main" className="flex min-h-screen items-center justify-center px-6 py-24">
-      <div className="text-center">
-        <span className="inline-block rounded-full border border-[rgba(242,239,233,0.15)] bg-[rgba(8,9,10,0.4)] px-3 py-1 text-xs text-[rgba(242,239,233,0.9)] shadow">
+    <main className={styles.root}>
+      <div aria-hidden className={styles.blob} />
+      {/* <div aria-hidden className={styles.grid} /> */}
+
+      <section className={styles.card}>
+        <span className={styles.badge}>
           Erro 404
         </span>
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[rgb(var(--brand-cream-rgb))] sm:text-5xl h1-gradient">
-          Página não encontrada
-        </h1>
-        <p className="mx-auto mt-3 max-w-xl text-[rgba(var(--brand-muted-rgb),1)]">
-          Desculpe, não encontramos o que você procura. O link pode estar incorreto ou a página foi movida.
+
+        <p className={styles.code} aria-hidden>404</p>
+
+        <h1 className={styles.title}>Página não encontrada</h1>
+
+        <p className={styles.description}>
+          O link pode estar incorreto ou a página foi movida. Use uma das opções
+          abaixo para continuar navegando no portfólio.
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Link href="/" className="btn btn-primary">
+
+        <div className={styles.divider} aria-hidden />
+
+        <div className={styles.actions}>
+          <Link href="/" className={`${styles.btn} ${styles.btnPrimary}`}>
             Voltar para a Home
           </Link>
-          <Link href="/#projects" className="btn">
+
+          <Link href="/#projects" className={`${styles.btn} ${styles.btnGhost}`}>
             Ver projetos
           </Link>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

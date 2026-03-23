@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   images: {
+    remotePatterns: [{
+      protocol: "https",
+      hostname: "landing-page-043005634019-sa-east-1-an.s3.sa-east-1.amazonaws.com",
+      pathname: "/images/**"
+    }],
     unoptimized: false,
     formats: ["image/avif", "image/webp"],
   },
