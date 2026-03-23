@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
+  turbopack: {},
   images: {
     remotePatterns: [{
       protocol: "https",
